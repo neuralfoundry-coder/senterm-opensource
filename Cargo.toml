@@ -1,0 +1,78 @@
+[package]
+name = "senterm"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "A next-generation terminal-based file manager with Miller columns and integrated shell"
+license = "MIT"
+repository = "https://github.com/yourusername/senterm"
+readme = "README.md"
+keywords = ["file-manager", "terminal", "tui", "retro", "miller-columns"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "senterm"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.100"
+chrono = { version = "0.4.42", features = ["serde"] }
+crossterm = "0.29.0"
+dirs = "5.0"
+rand = "0.8"
+ratatui = { version = "0.29.0", features = ["serde"] }
+reqwest = { version = "0.12.24", default-features = false, features = ["json", "rustls-tls", "charset", "http2", "macos-system-configuration"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0"
+sysinfo = "0.37.2"
+tokio = { version = "1.48.0", features = ["full"] }
+toml = "0.9.8"
+tracing = "0.1.41"
+tracing-appender = "0.2.3"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter", "json"] }
+
+# File viewer dependencies
+tui-markdown = "0.3"
+pulldown-cmark = "0.11"
+docx-rs = "0.4"
+calamine = "0.26"
+hwp = "0.2"
+zip = "2.2"
+xml-rs = "0.8"
+fs_extra = "1.3.0"
+
+# Image processing for terminal preview
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif"] }
+
+# Native terminal graphics protocols
+base64 = "0.22"
+
+# PTY terminal dependencies
+portable-pty = "0.9"
+vt100 = "0.15"
+
+# Audio dependencies (optional for cross-compile)
+rodio = { version = "0.18", default-features = false, features = ["symphonia-all"], optional = true }
+
+# Syntax highlighting
+syntect = "5.2"
+
+# System clipboard
+arboard = "3.4"
+
+# Async utilities
+futures = "0.3"
+async-trait = "0.1"
+
+# Directory walking
+walkdir = "2.5"
+
+# File system watching
+notify = "6.1"
+
+[features]
+default = ["audio"]
+audio = ["rodio"]
+
+[dev-dependencies]
+tempfile = "3"
