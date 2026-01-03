@@ -149,12 +149,21 @@ fi
 
 echo -e "${GREEN}✓${NC} Extracted successfully"
 
-# Verify binary
-if file "${SOURCE_BINARY}" | grep -q "ELF"; then
-    echo -e "${GREEN}✓${NC} Binary verified (ELF executable)"
+# Verify binary (file command is optional)
+if command -v file &> /dev/null; then
+    if file "${SOURCE_BINARY}" | grep -q "ELF"; then
+        echo -e "${GREEN}✓${NC} Binary verified (ELF executable)"
+    else
+        echo -e "${RED}✗ Invalid binary format${NC}"
+        exit 1
+    fi
 else
-    echo -e "${RED}✗ Invalid binary format${NC}"
-    exit 1
+    # Fallback: check ELF magic bytes
+    if head -c 4 "${SOURCE_BINARY}" | grep -q "ELF"; then
+        echo -e "${GREEN}✓${NC} Binary verified (ELF executable)"
+    else
+        echo -e "${YELLOW}⚠${NC} Could not verify binary format (file command not found)"
+    fi
 fi
 
 # Check install directory

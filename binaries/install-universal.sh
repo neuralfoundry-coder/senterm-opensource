@@ -158,16 +158,30 @@ fi
 
 echo -e "${GREEN}✓${NC} Extracted successfully"
 
-# Verify binary
-if file "${SOURCE_BINARY}" | grep -q "${BINARY_TYPE}"; then
-    if [[ "$PLATFORM" == "macos" ]] && file "${SOURCE_BINARY}" | grep -q "universal"; then
-        echo -e "${GREEN}✓${NC} Universal binary verified (x86_64 + arm64)"
+# Verify binary (file command is optional)
+if command -v file &> /dev/null; then
+    if file "${SOURCE_BINARY}" | grep -q "${BINARY_TYPE}"; then
+        if [[ "$PLATFORM" == "macos" ]] && file "${SOURCE_BINARY}" | grep -q "universal"; then
+            echo -e "${GREEN}✓${NC} Universal binary verified (x86_64 + arm64)"
+        else
+            echo -e "${GREEN}✓${NC} Binary verified (${BINARY_TYPE} executable)"
+        fi
     else
-        echo -e "${GREEN}✓${NC} Binary verified (${BINARY_TYPE} executable)"
+        echo -e "${RED}✗ Invalid binary format${NC}"
+        exit 1
     fi
 else
-    echo -e "${RED}✗ Invalid binary format${NC}"
-    exit 1
+    # Fallback: check if file is executable by examining ELF/Mach-O header
+    if [[ "$PLATFORM" == "linux" ]]; then
+        # Check ELF magic bytes
+        if head -c 4 "${SOURCE_BINARY}" | grep -q "ELF"; then
+            echo -e "${GREEN}✓${NC} Binary verified (ELF executable)"
+        else
+            echo -e "${YELLOW}⚠${NC} Could not verify binary format (file command not found)"
+        fi
+    else
+        echo -e "${YELLOW}⚠${NC} Skipping binary verification (file command not found)"
+    fi
 fi
 
 # Check install directory
