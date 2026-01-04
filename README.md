@@ -11,6 +11,7 @@ A next-generation terminal-based file manager built with Rust for performance an
 ![Rust](https://img.shields.io/badge/Rust-1.70+-orange.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS-lightgrey.svg)
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-pink?logo=github-sponsors)](https://github.com/sponsors/neuralfoundry-coder)
 
 ---
 
@@ -272,6 +273,16 @@ cargo build --release
 # Check code quality
 cargo clippy
 ```
+
+---
+
+## 💖 Support
+
+If you find Senterm useful, consider supporting its development:
+
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor%20on%20GitHub-%E2%9D%A4-pink?logo=github-sponsors&style=for-the-badge)](https://github.com/sponsors/neuralfoundry-coder)
+
+Your support helps maintain and improve this project!
 
 ---
 
